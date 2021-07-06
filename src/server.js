@@ -3,7 +3,7 @@ const express = require("express");
 const db=require("./db/db")
 const cookie=require("cookie-parser")
 const server = express();
-
+const router= require("./routes/index")
 const cors =require("cors")
 server.use(cookie())
 server.use(express.json());
