@@ -28,14 +28,17 @@ exports.getAllAvocat= (request,response)=>{
 exports.getAvocatById=(request,response)=>{
  const {id}=request.params
  Avocat.getById(id,(error,result)=>{
-   if(error){
+   try{
+    response.status(OK).json({
+      result
+    })
+   }
+   catch(error){
      response.status(BAD_REQUEST).json({
       message: 'le servre founuction plus.'
      })
    }
-   response.status(OK).json({
-     result
-   })
+  
  })
 }
 exports.newAvocat = (request, response) => {
@@ -56,24 +59,17 @@ exports.newAvocat = (request, response) => {
 
   Avocat.selectSpécialitéId(request.body, (error, result) => {
       console.log(data.Ville)
-      try {
-        let SpécialitéId = result[0].id;
-       console.log(SpécialitéId)
-      } catch (error) {
-        response.status(500).json({
-          message: error,
-        });
-      }
+         if(error){
+           console.log(error)
+         }
+         let SpécialitéId= result[0].id
     });
   Avocat.villId(request.body,
     (error, result) => {
-      try {
-         let villId = result[0].id;
-      } catch (error) {
-        response.status(500).json({
-          message: error,
-        });
+      if(error){
+        console.log(error)
       }
+      let villId= result[0].id
     });
   Avocat.addAvocat(SpécialitéId, villId, request.body, (error, result) => {
     if (error) {
