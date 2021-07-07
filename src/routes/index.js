@@ -1,8 +1,10 @@
-const AvocatRouter =require ("../routes/avocat_router")
 const express =require ("express")
+const router = express.Router()
+const AvocatRouter =require ("../routes/avocat_router")
+
 const { request, response } = require("express")
 const notFound =require('../helpers/stuts_code')
-const router = express.Router()
+
 router.use(AvocatRouter)
 router.get("/api",(request,response)=>{
     response.json({
@@ -14,3 +16,4 @@ router.use("*",(request,response)=>{
         message:'this page is not found'
     })
 })
+module.exports= router
