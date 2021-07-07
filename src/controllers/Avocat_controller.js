@@ -6,11 +6,10 @@ const { json } = require("body-parser");
 
 
 exports.getAllAvocat= (request,response)=>{
-  const{
-    ville,
-    Spécialité
-  }= request.body
-   Avocat.getAll(request.body,(error,result)=>{
+  const ville=request.params.ville
+   const Specialite = request.params.Specialite
+
+   Avocat.getAll(ville,Specialite,(error,result)=>{
     if (error) {
       response.status(500).json({
         message: 'le servre founuction plus.'
@@ -29,9 +28,9 @@ exports.getAvocatById=(request,response)=>{
  const {id}=request.params
  Avocat.getById(id,(error,result)=>{
    try{
-    response.status(OK).json({
-      result
-    })
+ response.status(OK).json({
+     result
+   })
    }
    catch(error){
      response.status(BAD_REQUEST).json({
