@@ -27,11 +27,12 @@ exports.getById = async (id, Callback) => {
   });
 };
 
-exports.selectSpécialitéId = async (newAvocat, Callback) => {
-  let SpécialitéIdQuery = await `SELECT id FROM Spécialité WHERE nom ="${newAvocat.Spécialité}"`;
-  db.query(SpécialitéIdQuery, (error, result) => {
+exports.selectSpecialiteId = async (Specialite, Callback) => {
+  let SpecialiteIdQuery = await `SELECT id FROM Spécialité WHERE nom ="${Specialite}"`;
+  db.query(SpecialiteIdQuery, (error, result) => {
     try {
       Callback(null, result);
+      console.log("the spec id:", result);
     } catch (error) {
       console.log("error:", error);
       Callback(error, null);
@@ -40,11 +41,12 @@ exports.selectSpécialitéId = async (newAvocat, Callback) => {
   });
 };
 
-exports.villId = async (newAvocat, Callback) => {
-  let villIdQuery = await `SELECT id FROM Ville WHERE nom ="${newAvocat.Ville}"`;
+exports.villId = async (Ville, Callback) => {
+  let villIdQuery = await `SELECT id FROM Ville WHERE nom ="${Ville}"`;
   db.query(villIdQuery, (error, result) => {
     try {
       Callback(null, result);
+      console.log("the city id:", result);
     } catch (error) {
       Callback(error, null);
       console.log(error);
@@ -54,12 +56,12 @@ exports.villId = async (newAvocat, Callback) => {
 };
 
 // add new avocat
-exports.addAvocat = async (SpécialitéId, villId, newAvocat, Callback) => {
+exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
   let AddAvocatQuery = await `INSERT INTO Avocat 
   (Prénom,Nom,Email,Password,
        Telephone,Adress,Ville,Presentation,Spécialité,
         Honorare, Spécialité_id, Ville_id) VALUES
-         ("${newAvocat.prénom}",
+         ("${newAvocat.prenom}",
          "${newAvocat.nom}",
          "${newAvocat.Email}",
          "${newAvocat.Password}",
@@ -67,11 +69,13 @@ exports.addAvocat = async (SpécialitéId, villId, newAvocat, Callback) => {
          "${newAvocat.Adress}",
          "${newAvocat.Ville}",
          "${newAvocat.Presentation}"
-         ,"${newAvocat.Spécialité}",
+         ,"${newAvocat.Specialite}",
          "${newAvocat.Honorare}",
-         "${SpécialitéId}",
+         "${SpecialiteId}",
          "${villId}"
          );`;
+  console.log("the SpecialiteId in addAvocat:", SpecialiteId);
+  console.log("the villId in addAvocat:", villId);
 
   db.query(AddAvocatQuery, (error, result) => {
     try {
