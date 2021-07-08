@@ -92,7 +92,8 @@ exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
   db.query(AddAvocatQuery, (error, result) => {
     try {
       Callback(null, result);
-      console.log("resulet:", result);
+      console.log("result:", result);
+      return result
     } catch (error) {
       console.log("error:", error);
       Callback(error, null);

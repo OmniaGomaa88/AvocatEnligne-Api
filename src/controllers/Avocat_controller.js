@@ -55,7 +55,7 @@ exports.newAvocat = (request, response) => {
     Honorare,
   } = request.body;
   console.log(request.body);
-  let data = request.body;
+  
   let SpecialiteId = 0;
   let villId = 0;
   Avocat.selectSpecialiteId(Specialite, (error, result) => {
@@ -83,23 +83,48 @@ exports.newAvocat = (request, response) => {
               "Un utilisateur utilisant cette adress email est dèjà enregistré",
           });
         } else {
-          Avocat.addAvocat(
-            SpecialiteId,
-            villId,
-            request.body,
-            (error, result) => {
-              if (error) {
-                response.status(BAD_REQUEST).json({
-                  message: error,
-                });
-              }
-              response.status(201).json({
-                message: "user add successfule",
-                data,
-              });
-              // console.log(result);
+          const saltRounds= 10
+          bcrypt.hash(Password,saltRounds,(error,hash)=>{
+            if(error){
+              response.status(BAD_REQUEST).json({
+                message:error
+              })
             }
-          );
+            else{
+              const newAvocat={
+                prenom,
+                nom,
+                Email,
+                Password:hash,
+                Telephone,
+                Adress,
+                Ville,
+                Presentation,
+                Specialite,
+                Honorare,
+              }
+              console.log("neAvocat object:",newAvocat)
+              Avocat.addAvocat(
+                SpecialiteId,
+                villId,
+                newAvocat,
+                (error, result) => {
+                  if (error) {
+                    response.status(BAD_REQUEST).json({
+                      message: error,
+                    });
+                  }
+                  response.status(201).json({
+                    message: "user add successfule",
+                    result,
+                  });
+                  // console.log(result);
+                }
+              );
+            }
+           
+          })
+          
         }
       });
     });
