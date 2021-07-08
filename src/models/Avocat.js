@@ -54,7 +54,19 @@ exports.villId = async (Ville, Callback) => {
     }
   });
 };
-
+exports.selectEmail = async (email, Callback) => {
+  let selectElmail = await `SELECT * FROM Avocat WHERE Email="${email}"`;
+  db.query(selectElmail, (error, result) => {
+    try {
+      Callback(null, result);
+      console.log("avocat selon email exist:", result);
+    } catch (error) {
+      Callback(error, null);
+      console.log("error:", error);
+      return;
+    }
+  });
+};
 // add new avocat
 exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
   let AddAvocatQuery = await `INSERT INTO Avocat 

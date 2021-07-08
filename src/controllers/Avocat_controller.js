@@ -1,7 +1,14 @@
 const Avocat = require("../models/Avocat");
 const { request, response } = require("express");
-
-const { OK, SERVER_ERROR, BAD_REQUEST } = require("../helpers/stuts_code");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const SECRET = "motSecret";
+const {
+  OK,
+  SERVER_ERROR,
+  BAD_REQUEST,
+  EMAIL_EXISTE,
+} = require("../helpers/stuts_code");
 const { json } = require("body-parser");
 
 exports.getAllAvocat = (request, response) => {
@@ -10,11 +17,11 @@ exports.getAllAvocat = (request, response) => {
 
   Avocat.getAll(ville, Specialite, (error, result) => {
     if (error) {
-      response.status(500).json({
+      response.status(BAD_REQUEST).json({
         message: "le servre founuction plus.",
       });
     } else
-      response.status(200).json({
+      response.status(Ok).json({
         result,
       });
   });
@@ -57,23 +64,43 @@ exports.newAvocat = (request, response) => {
     }
     SpecialiteId = result[0].id;
     console.log("SpecialiteId in controller:", SpecialiteId);
+
     Avocat.villId(Ville, (error, result) => {
       if (error) {
         console.log(error);
       }
       villId = result[0].id;
       console.log("villId in controller:", villId);
-      Avocat.addAvocat(SpecialiteId, villId, request.body, (error, result) => {
+
+      Avocat.selectEmail(Email, (error, result) => {
+        console.log("emeil in selectEmail controller", Email);
+        console.log(result);
         if (error) {
-          response.status(500).json({
-            message: error,
+          console.log(error);
+        } else if (result.length !== 0) {
+          response.status(EMAIL_EXISTE).json({
+            message:
+              "Un utilisateur utilisant cette adress email est dèjà enregistré",
           });
+        } else {
+          Avocat.addAvocat(
+            SpecialiteId,
+            villId,
+            request.body,
+            (error, result) => {
+              if (error) {
+                response.status(BAD_REQUEST).json({
+                  message: error,
+                });
+              }
+              response.status(201).json({
+                message: "user add successfule",
+                data,
+              });
+              // console.log(result);
+            }
+          );
         }
-        response.status(201).json({
-          message: "user add successfule",
-          data,
-        });
-        // console.log(result);
       });
     });
   });
