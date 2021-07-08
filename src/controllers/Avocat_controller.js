@@ -21,7 +21,7 @@ exports.getAllAvocat = (request, response) => {
         message: "le servre founuction plus.",
       });
     } else
-      response.status(Ok).json({
+      response.status(OK).json({
         result,
       });
   });
