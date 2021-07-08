@@ -68,8 +68,8 @@ exports.selectEmail = async (email, Callback) => {
   });
 };
 // add new avocat
-exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
-  let AddAvocatQuery = await `INSERT INTO Avocat 
+exports.addAvocat =  (SpecialiteId, villId, newAvocat, Callback) => {
+  let AddAvocatQuery =  `INSERT INTO Avocat 
   (Prénom,Nom,Email,Password,
        Telephone,Adress,Ville,Presentation,Spécialité,
         Honorare, Spécialité_id, Ville_id) VALUES
@@ -88,12 +88,13 @@ exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
          );`;
   console.log("the SpecialiteId in addAvocat:", SpecialiteId);
   console.log("the villId in addAvocat:", villId);
-
+console.log(newAvocat.Password)
   db.query(AddAvocatQuery, (error, result) => {
+    console.log(error);
     try {
       Callback(null, result);
       console.log("result:", result);
-      return result
+  
     } catch (error) {
       console.log("error:", error);
       Callback(error, null);

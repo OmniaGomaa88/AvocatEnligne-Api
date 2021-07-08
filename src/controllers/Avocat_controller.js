@@ -91,7 +91,7 @@ exports.newAvocat = (request, response) => {
               })
             }
             else{
-              const newAvocat={
+              const newAvocat = {
                 prenom,
                 nom,
                 Email,
@@ -114,11 +114,11 @@ exports.newAvocat = (request, response) => {
                       message: error,
                     });
                   }
-                  response.status(201).json({
+                  response.status(OK).json({
                     message: "user add successfule",
                     result,
                   });
-                  // console.log(result);
+                   console.log(result);
                 }
               );
             }
