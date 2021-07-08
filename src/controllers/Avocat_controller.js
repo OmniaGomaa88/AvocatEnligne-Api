@@ -17,7 +17,7 @@ exports.getAllAvocat = (request, response) => {
 
   Avocat.getAll(ville, Specialite, (error, result) => {
     if (error) {
-      response.status(BAD_REQUEST).json({
+      response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
       });
     } else
@@ -31,9 +31,9 @@ exports.getAvocatById = (request, response) => {
   const { id } = request.params;
   Avocat.getById(id, (error, result) =>  {
     if(error) {
-      response.status(BAD_REQUEST).json({
-        message:error
-      })
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      });
       
     } else{
       response.status(OK).json({
@@ -88,9 +88,9 @@ exports.newAvocat = (request, response) => {
           const saltRounds= 10
           bcrypt.hash(Password,saltRounds,(error,hash)=>{
             if(error){
-              response.status(BAD_REQUEST).json({
-                message:error
-              })
+              response.status(SERVER_ERROR).json({
+                message: "le servre founuction plus.",
+              });
             }
             else{
               const newAvocat = {
@@ -112,8 +112,8 @@ exports.newAvocat = (request, response) => {
                 newAvocat,
                 (error, result) => {
                   if (error) {
-                    response.status(BAD_REQUEST).json({
-                      message: error,
+                    response.status(SERVER_ERROR).json({
+                      message: "le servre founuction plus.",
                     });
                   }
                   response.status(OK).json({
