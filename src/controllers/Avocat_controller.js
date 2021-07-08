@@ -29,17 +29,15 @@ exports.getAllAvocat = (request, response) => {
 
 exports.getAvocatById = (request, response) => {
   const { id } = request.params;
-  Avocat.getById(id, (error, result) =>  {
-    if(error) {
+  Avocat.getById(id, (error, result) => {
+    if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
       });
-      
-    } else{
+    } else {
       response.status(OK).json({
         result,
       });
-     
     }
   });
 };
@@ -57,7 +55,7 @@ exports.newAvocat = (request, response) => {
     Honorare,
   } = request.body;
   console.log(request.body);
-  
+
   let SpecialiteId = 0;
   let villId = 0;
   Avocat.selectSpecialiteId(Specialite, (error, result) => {
@@ -85,27 +83,26 @@ exports.newAvocat = (request, response) => {
               "Un utilisateur utilisant cette adress email est dèjà enregistré",
           });
         } else {
-          const saltRounds= 10
-          bcrypt.hash(Password,saltRounds,(error,hash)=>{
-            if(error){
+          const saltRounds = 10;
+          bcrypt.hash(Password, saltRounds, (error, hash) => {
+            if (error) {
               response.status(SERVER_ERROR).json({
                 message: "le servre founuction plus.",
               });
-            }
-            else{
+            } else {
               const newAvocat = {
                 prenom,
                 nom,
                 Email,
-                Password:hash,
+                Password: hash,
                 Telephone,
                 Adress,
                 Ville,
                 Presentation,
                 Specialite,
                 Honorare,
-              }
-              console.log("neAvocat object:",newAvocat)
+              };
+              console.log("neAvocat object:", newAvocat);
               Avocat.addAvocat(
                 SpecialiteId,
                 villId,
@@ -120,13 +117,11 @@ exports.newAvocat = (request, response) => {
                     message: "user add successfule",
                     result,
                   });
-                   console.log(result);
+                  console.log(result);
                 }
               );
             }
-           
-          })
-          
+          });
         }
       });
     });
