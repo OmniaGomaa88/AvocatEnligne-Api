@@ -29,15 +29,17 @@ exports.getAllAvocat = (request, response) => {
 
 exports.getAvocatById = (request, response) => {
   const { id } = request.params;
-  Avocat.getById(id, (error, result) => {
-    try {
+  Avocat.getById(id, (error, result) =>  {
+    if(error) {
+      response.status(BAD_REQUEST).json({
+        message:error
+      })
+      
+    } else{
       response.status(OK).json({
         result,
       });
-    } catch (error) {
-      response.status(BAD_REQUEST).json({
-        message: "le servre founuction plus.",
-      });
+     
     }
   });
 };
