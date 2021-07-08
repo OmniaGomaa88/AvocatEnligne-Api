@@ -35,17 +35,7 @@ exports.selectSpecialiteId = async (Specialite, Callback) => {
   });
 };
 
-exports.villId = async (Ville, Callback) => {
-  let villIdQuery = await `SELECT id FROM Ville WHERE nom ="${Ville}"`;
-  db.query(villIdQuery, (error, result) => {
-    if (error) {
-      console.log("error:", error);
-      return;
-    } else {
-      Callback(null, result);
-    }
-  });
-};
+
 exports.selectEmail = async (email, Callback) => {
   let selectElmail = await `SELECT * FROM Avocat WHERE Email="${email}"`;
   db.query(selectElmail, (error, result) => {
@@ -87,6 +77,18 @@ exports.addAvocat =async (SpecialiteId, villId, newAvocat, Callback) => {
     } else {
       Callback(null, result);
       console.log("result:", result);
+    }
+  });
+};
+// select all spicialite
+exports.getAllSpecialite= async (Ville, Callback) => {
+  let specialiteQuery = await `SELECT * FROM Spécialité `;
+  db.query(specialiteQuery, (error, result) => {
+    if (error) {
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
     }
   });
 };

@@ -1,4 +1,5 @@
 const client = require("../models/client");
+const Avocat = require("../models/Avocat");
 const { request, response } = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -59,7 +60,11 @@ const {
                   }
                   response.status(OK).json({
                     message: "user add successfule",
-                    result,
+                    prenom:newclient.prenom,
+                    nom:newclient.nom,
+                    Email:newclient.Email,
+                    Telephone:newclient.Telephone,
+                    Adress:newclient.Adress,
                   });
                   console.log(result);
                 }
@@ -69,3 +74,5 @@ const {
         }
       });
  }
+ 
+  

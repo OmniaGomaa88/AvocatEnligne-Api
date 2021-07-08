@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const AvocatRouter = require("../routes/avocat_router");
 const clientRouter = require("../routes/client_router");
+const villeRouter =require("../routes/ville_touter")
 const { request, response } = require("express");
 const notFound = require("../helpers/stuts_code");
 
 router.use(AvocatRouter);
 router.use(clientRouter);
+router.use(villeRouter)
 router.get("/api", (request, response) => {
   response.json({
     message: "hello world",

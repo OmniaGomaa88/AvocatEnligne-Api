@@ -1,5 +1,8 @@
 const Avocat = require("../models/Avocat");
+const Specialite =require("../models/specialite")
+const ville =require("../models/ville")
 const { request, response } = require("express");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SECRET = "motSecret";
@@ -65,7 +68,7 @@ exports.newAvocat = (request, response) => {
     SpecialiteId = result[0].id;
     console.log("SpecialiteId in controller:", SpecialiteId);
 
-    Avocat.villId(Ville, (error, result) => {
+    ville.villId(Ville, (error, result) => {
       if (error) {
         console.log(error);
       }
@@ -115,7 +118,16 @@ exports.newAvocat = (request, response) => {
                   }
                   response.status(OK).json({
                     message: "user add successfule",
-                    result,
+                    prenom:newAvocat.prenom,
+                    nom:newAvocat.nom,
+                    Email:newAvocat.Email,
+                    Telephone:newAvocat.Telephone,
+                    Adress:newAvocat.Adress,
+                    Ville:newAvocat.Ville,
+                    Presentation:newAvocat.Presentation,
+                    Specialite:newAvocat.Specialite,
+                    Honorare:newAvocat.Honorare,
+                   
                   });
                   console.log(result);
                 }
