@@ -92,3 +92,20 @@ exports.getAllSpecialite= async (Callback) => {
     }
   });
 };
+
+exports.update= async (id, Email, Adress, Ville, Presentation ,Callback) => {
+  let updateDataQuery = await `UPDATE Avocat SET
+  Email="${Email}",
+  Adress="${Adress}",
+  Ville="${Ville}",
+  Presentation="${Presentation}"
+  WHERE id =${id}`;
+  db.query(updateDataQuery, (error, result) => {
+    if (error) {
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+    }
+  });
+};
