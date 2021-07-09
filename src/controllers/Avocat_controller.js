@@ -1,6 +1,6 @@
 const Avocat = require("../models/Avocat");
-const Specialite =require("../models/specialite")
-const ville =require("../models/ville")
+const Specialite = require("../models/specialite");
+const ville = require("../models/ville");
 const { request, response } = require("express");
 
 const bcrypt = require("bcrypt");
@@ -118,16 +118,15 @@ exports.newAvocat = (request, response) => {
                   }
                   response.status(OK).json({
                     message: "user add successfule",
-                    prenom:newAvocat.prenom,
-                    nom:newAvocat.nom,
-                    Email:newAvocat.Email,
-                    Telephone:newAvocat.Telephone,
-                    Adress:newAvocat.Adress,
-                    Ville:newAvocat.Ville,
-                    Presentation:newAvocat.Presentation,
-                    Specialite:newAvocat.Specialite,
-                    Honorare:newAvocat.Honorare,
-                   
+                    prenom: newAvocat.prenom,
+                    nom: newAvocat.nom,
+                    Email: newAvocat.Email,
+                    Telephone: newAvocat.Telephone,
+                    Adress: newAvocat.Adress,
+                    Ville: newAvocat.Ville,
+                    Presentation: newAvocat.Presentation,
+                    Specialite: newAvocat.Specialite,
+                    Honorare: newAvocat.Honorare,
                   });
                   console.log(result);
                 }
@@ -139,3 +138,18 @@ exports.newAvocat = (request, response) => {
     });
   });
 };
+// get specialite
+exports.fiendAllSpecialites=(request,response)=>{
+  Avocat.getAllSpecialite((error,result)=>{
+    if (error){
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      });
+    }
+   else
+  response.status(OK).json({
+    result,
+  });
+  })
+}
+

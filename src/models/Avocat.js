@@ -81,7 +81,7 @@ exports.addAvocat =async (SpecialiteId, villId, newAvocat, Callback) => {
   });
 };
 // select all spicialite
-exports.getAllSpecialite= async (Ville, Callback) => {
+exports.getAllSpecialite= async (Callback) => {
   let specialiteQuery = await `SELECT * FROM Spécialité `;
   db.query(specialiteQuery, (error, result) => {
     if (error) {
