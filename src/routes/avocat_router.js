@@ -8,4 +8,7 @@ AvocatRouter.get("/api/avocat/:id",avocatController.getAvocatById)
 AvocatRouter.get("/api/specialits",avocatController.fiendAllSpecialites)
 AvocatRouter.post("/api/sigin",avocatController.login)
 AvocatRouter.post("/api/editData/:id",avocatController.updateAvocatData)
+AvocatRouter.post("/api/editTel/:id",avocatController.updateAvocatTel)
+AvocatRouter.post("/api/editHonoraire/:id",avocatController.updateAvocatHonoraire)
+
 module.exports=AvocatRouter

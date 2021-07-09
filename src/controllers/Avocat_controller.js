@@ -262,3 +262,37 @@ exports.updateAvocatData=(request,response)=>{
     })
   })
 }
+exports.updateAvocatTel=(request,response)=>{
+  const {id}=request.params
+  const Telephone= request.body.Telephone
+  Avocat.updateTel(
+                id,
+                Telephone,
+       (error,result)=>{
+    if(error){
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      })
+    }
+    response.status(OK).json({
+      result
+    })
+  })
+}
+exports.updateAvocatHonoraire=(request,response)=>{
+  const {id}=request.params
+  const Honorare= request.body.Honorare
+  Avocat.updateHonoraire(
+                id,
+                Honorare,
+       (error,result)=>{
+    if(error){
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      })
+    }
+    response.status(OK).json({
+      result
+    })
+  })
+}

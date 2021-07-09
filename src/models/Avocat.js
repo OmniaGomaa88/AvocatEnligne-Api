@@ -109,3 +109,29 @@ exports.update= async (id, Email, Adress, Ville, Presentation ,Callback) => {
     }
   });
 };
+exports.updateTel= async (id, telphon ,Callback) => {
+  let updatetelQuery = await `UPDATE Avocat SET
+  Telephone="${telphon}"
+  WHERE id =${id}`;
+  db.query(updatetelQuery, (error, result) => {
+    if (error) {
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+    }
+  });
+};
+exports.updateHonoraire= async (id, Honorare ,Callback) => {
+  let updateHonoraireQuery = await `UPDATE Avocat SET
+  Honorare="${Honorare}"
+  WHERE id =${id}`;
+  db.query(updateHonoraireQuery, (error, result) => {
+    if (error) {
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+    }
+  });
+};
