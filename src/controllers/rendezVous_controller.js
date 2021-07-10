@@ -88,3 +88,20 @@ exports.findClientRendezVous=(request,response)=>{
      }
    })
  }
+ exports.annulerParClient=(request,response)=>{
+const  avocatId=request.params.id
+const clientId= 2
+RendezVous.rendezVousAnnuleClient(avocatId,clientId,(error,result)=>{
+  console.log(avocatId)
+  if(error){
+    response.status(SERVER_ERROR).json({
+      message: "le servre founuction plus.",
+    });
+  }
+  else {
+    response.status(OK).json({
+      message: "le rendez-vous est annulé."
+    });
+  }
+})
+ }

@@ -3,8 +3,8 @@ const { request, response } = require("express")
 const rendezVousRouter = express.Router()
 const rendezVous_controuller = require("../controllers/rendezVous_controller")
 rendezVousRouter.post("/api/addRendezVous/:id",rendezVous_controuller.newRendezVous)
-rendezVousRouter.get("/api/MesRendezVous",rendezVous_controuller.findMesRendezVous)
-rendezVousRouter.get("/api/clientRendezVous",rendezVous_controuller.findClientRendezVous)
-
+rendezVousRouter.get("/api/avocat/RendezVous",rendezVous_controuller.findMesRendezVous)
+rendezVousRouter.get("/api/client/RendezVous",rendezVous_controuller.findClientRendezVous)
+rendezVousRouter.post("/api/client/updateAnnule/:id",rendezVous_controuller.annulerParClient)
 
 module.exports=rendezVousRouter
