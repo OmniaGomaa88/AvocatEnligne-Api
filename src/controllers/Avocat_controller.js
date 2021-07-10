@@ -229,7 +229,6 @@ exports.login = (request, response) => {
                 Honorare: request.user.Honorare,
               },
             });
-            
           });
         });
       });
@@ -239,60 +238,49 @@ exports.login = (request, response) => {
 
 // ubdate data
 
-exports.updateAvocatData=(request,response)=>{
-  const {id}=request.params
-  const Email= request.body.Email
-  const Adress= request.body.Adress
-  const Ville= request.body.Ville
-  const Presentation= request.body.Presentation
-  Avocat.update(
-                id,
-                Email,
-                Adress,
-                Ville,
-                Presentation,
-       (error,result)=>{
-    if(error){
+exports.updateAvocatData = (request, response) => {
+  const { id } = request.params;
+  const Email = request.body.Email;
+  const Adress = request.body.Adress;
+  const Ville = request.body.Ville;
+  const Presentation = request.body.Presentation;
+  Avocat.update(id, Email, Adress, Ville, Presentation, (error, result) => {
+    if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
-      })
+      });
     }
     response.status(OK).json({
-      result
-    })
-  })
-}
-exports.updateAvocatTel=(request,response)=>{
-  const {id}=request.params
-  const Telephone= request.body.Telephone
-  Avocat.updateTel(
-                id,
-                Telephone,
-       (error,result)=>{
-    if(error){
+      result,
+    });
+  });
+};
+exports.updateAvocatTel = (request, response) => {
+  const { id } = request.params;
+  const Telephone = request.body.Telephone;
+  Avocat.updateTel(id, Telephone, (error, result) => {
+    if (error) {
+      console.log(error)
+      // response.status(SERVER_ERROR).json({
+        // message: "le servre founuction plus.",
+      // });
+    }
+    response.status(OK).json({
+      result,
+    });
+  });
+};
+exports.updateAvocatHonoraire = (request, response) => {
+  const { id } = request.params;
+  const Honorare = request.body.Honorare;
+  Avocat.updateHonoraire(id, Honorare, (error, result) => {
+    if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
-      })
+      });
     }
     response.status(OK).json({
-      result
-    })
-  })
-}
-exports.updateAvocatHonoraire=(request,response)=>{
-  const {id}=request.params
-  const Honorare= request.body.Honorare
-  Avocat.updateHonoraire(
-                id,
-                Honorare,
-       (error,result)=>{
-    if(error){
-      response.status(SERVER_ERROR).json({
-        message: "le servre founuction plus.",
-      })
-    }
-    response.status(OK).json({
-      result
-    })
-  })
-}
+      result,
+    });
+  });
+};
