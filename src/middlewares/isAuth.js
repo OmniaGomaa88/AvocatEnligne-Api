@@ -4,19 +4,24 @@ const SECRET = "motSecret";
 
 const isAuth = (request, response, next) => {
   const token = response.cookie.authcookie;
-
-  jwt.verify(token, SECRET, (error, user) => {
+console.log(token)
+  jwt.verify(token, SECRET, (error, avocat) => {
     if (error) {
       response.send(error.message);
     } else {
       const {
-          id,
-        email,
-        password,
-        first_name,
-        last_name,
-        role,
-        exp } = user;
+        id,
+        prenom,
+        nom,
+        Email,
+        Password,
+        Telephone,
+        Adress,
+        Ville,
+        Presentation,
+        Specialite,
+        Honorare,
+        exp } = avocat;
 
       // Useless or not ?!
       if (Date.now() / 1000 >= exp) {
@@ -26,13 +31,18 @@ const isAuth = (request, response, next) => {
         });
       }
 
-      request.user = { 
-          id,
-        email,
-        password,
-        first_name,
-        last_name,
-        role
+      request.avocat = { 
+        id,
+        prenom,
+        nom,
+        Email,
+        Password,
+        Telephone,
+        Adress,
+        Ville,
+        Presentation,
+        Specialite,
+        Honorare,
      };
       next();
     }

@@ -5,6 +5,7 @@ const client = require("../models/client");
 const { request, response } = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const SECRET = "motSecret";
 const MAXAGE = Math.floor(Date.now() / 1000) + 60 * 60;
 const {
@@ -153,97 +154,92 @@ exports.fiendAllSpecialites = (request, response) => {
       });
   });
 };
-// login de avocat et client
+// login de avocat 
 exports.login = (request, response) => {
   const { Email, password } = request.body;
-  console.log(request.body)
+  console.log(request.body);
   Avocat.selectEmail(Email, (error, result) => {
     if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
       });
     } else if (result.length === 0) {
+      response.status(UNAUTHORIZED).json({
+        message: "email n'exist pas",
+      });
+    } else {
+      const hash = result[0].Password;
+      bcrypt.compare(password, hash, (error, correct) => {
+        console.log(password);
+        console.log(hash);
+        if (error) {
+          console.log(error);
+        }
+        if (!correct) {
           response.status(UNAUTHORIZED).json({
-            message: "email n'exist pas",
+            message: "votre mot de pass n'est pas correct",
           });
-          
         }
-        else{
-          const hash = result[0].Password;
-          bcrypt.compare(password, hash, (error, correct) => {
-            console.log(password)
-            console.log(hash)
-            if(error){
-              console.log(error)
-            }
-            if (!correct) {
-              response.status(UNAUTHORIZED).json({
-                message: "votre mot de pass n'est pas correct",
-              });
-            }
-            const user = {
-              id: result[0].id,
-              prenom: result[0].Prénom,
-              nom: result[0].Nom,
-              Email: result[0].Email,
-              Password: result[0].Password,
-              Telephone: result[0].Telephone,
-              Adress: result[0].Adress,
-              Ville: result[0].Ville,
-              Presentation: result[0].Presentation,
-              Specialite: result[0].Spécialité,
-              Honorare: result[0].Honorare,
-              exp: MAXAGE,
-            };
-            jwt.sign(user, SECRET, (error, token) => {
-              if (error) {
-                response.status(SERVER_ERROR).json({
-                  message: "le servre founuction plus.",
-                });
-              }
-              request.user = {
-                id: result[0].id,
-                prenom: result[0].Prénom,
-                nom: result[0].Nom,
-                Email: result[0].Email,
-                Password: result[0].Password,
-                Telephone: result[0].Telephone,
-                Adress: result[0].Adress,
-                Ville: result[0].Ville,
-                Presentation: result[0].Presentation,
-                Specialite: result[0].Spécialité,
-                Honorare: result[0].Honorare,
-              };
-              response.cookie("authcookie", token, { maxAge: MAXAGE });
-              response.status(OK).json({
-                token: token,
-                user: {
-                  id: request.user.id,
-                  prenom: request.user.Prénom,
-                  nom: request.user.Nom,
-                  Email: request.user.Email,
-                  Password: request.user.Password,
-                  Telephone: request.user.Telephone,
-                  Adress: request.user.Adress,
-                  Ville: request.user.Ville,
-                  Presentation: request.user.Presentation,
-                  Specialite: request.user.Spécialité,
-                  Honorare: request.user.Honorare,
-                },
-              });
+        const avocat = {
+          id: result[0].id,
+          prenom: result[0].Prénom,
+          nom: result[0].Nom,
+          Email: result[0].Email,
+          Password: result[0].Password,
+          Telephone: result[0].Telephone,
+          Adress: result[0].Adress,
+          Ville: result[0].Ville,
+          Presentation: result[0].Presentation,
+          Specialite: result[0].Spécialité,
+          Honorare: result[0].Honorare,
+          exp: MAXAGE,
+        };
+        jwt.sign(avocat, SECRET, (error, token) => {
+          if (error) {
+            response.status(SERVER_ERROR).json({
+              message: "le servre founuction plus.",
             });
+          }
+          request.avocat = {
+            id: result[0].id,
+            prenom: result[0].Prénom,
+            nom: result[0].Nom,
+            Email: result[0].Email,
+            Password: result[0].Password,
+            Telephone: result[0].Telephone,
+            Adress: result[0].Adress,
+            Ville: result[0].Ville,
+            Presentation: result[0].Presentation,
+            Specialite: result[0].Spécialité,
+            Honorare: result[0].Honorare,
+          };
+          response.cookie("authcookie", token, { maxAge: MAXAGE });
+          response.status(OK).json({
+            token: token,
+            avocat: {
+              id: request.avocat.id,
+              prenom: request.avocat.Prénom,
+              nom: request.avocat.Nom,
+              Email: request.avocat.Email,
+              Password: request.avocat.Password,
+              Telephone: request.avocat.Telephone,
+              Adress: request.avocat.Adress,
+              Ville: request.avocat.Ville,
+              Presentation: request.avocat.Presentation,
+              Specialite: request.avocat.Spécialité,
+              Honorare: request.avocat.Honorare,
+            },
           });
-
-        }
-       
-    
+        });
+      });
+    }
   });
 };
 
 // ubdate data
 
 exports.updateAvocatData = (request, response) => {
-  const { id } = request.params;
+  const  id  = request.avocat.id;
   const Email = request.body.Email;
   const Adress = request.body.Adress;
   const Ville = request.body.Ville;
@@ -264,9 +260,9 @@ exports.updateAvocatTel = (request, response) => {
   const Telephone = request.body.Telephone;
   Avocat.updateTel(id, Telephone, (error, result) => {
     if (error) {
-      console.log(error)
+      console.log(error);
       // response.status(SERVER_ERROR).json({
-        // message: "le servre founuction plus.",
+      // message: "le servre founuction plus.",
       // });
     }
     response.status(OK).json({
