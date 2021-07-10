@@ -44,6 +44,7 @@ exports.selectEmail = async (email, Callback) => {
       return;
     } else {
       Callback(null, result);
+      console.log(result)
     }
   });
 };
