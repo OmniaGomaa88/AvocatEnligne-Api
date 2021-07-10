@@ -34,3 +34,19 @@ db.query(getRendezVousQuery, (error, result) => {
   }
 });
 }
+// get client rendez-vous  avec avocat data 
+exports.getClientRendezVous= async(clientId,Callback)=>{
+  let getClientRendezVousQuery = await `SELECT * FROM
+  Avocat  inner join RendezVous
+   ON Avocat.id =RendezVous.avocat_id
+where client_id=${clientId}`;
+db.query(getClientRendezVousQuery, (error, result) => {
+  if (error) {
+    Callback(error, null);
+    console.log("error:", error);
+    return;
+  } else {
+    Callback(null, result);
+  }
+});
+}
