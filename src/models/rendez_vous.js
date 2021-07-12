@@ -72,3 +72,21 @@ exports.rendezVousAnnuleClient=async(rendezVousId,clientId,Callback)=>{
   });
   
 }
+// annuler rendez-vous par avocat
+exports.rendezVousAnnuleAvocat=async(rendezVousId,avocatId,Callback)=>{
+   
+  let rendezVousAnnuleAvocat = await `UPDATE RendezVous SET
+  annulé=false
+  WHERE id=${rendezVousId} AND  avocat_id=${avocatId}`
+  db.query(rendezVousAnnuleAvocat, (error, result) => {
+    if (error) {
+      Callback(error, null);
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+      
+    }
+  });
+  
+}

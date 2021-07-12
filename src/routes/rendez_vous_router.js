@@ -7,7 +7,7 @@ rendezVousRouter.post("/api/addRendezVous/:id",isAuth,rendezVous_controuller.new
 rendezVousRouter.get("/api/RendezVous",isAuth,rendezVous_controuller.findMesRendezVous)
 rendezVousRouter.get("/api/client/RendezVous",isAuth,rendezVous_controuller.findClientRendezVous)
 rendezVousRouter.post("/api/client/Annule/:id",isAuth,rendezVous_controuller.annulerParClient)
-// rendezVousRouter.post("/api/client/updateAnnule/:id",isAuth,rendezVous_controuller.annulerParClient)
+ rendezVousRouter.post("/api/Annule/:id",isAuth,rendezVous_controuller.annulerParAvocat)
 
 
 module.exports=rendezVousRouter
