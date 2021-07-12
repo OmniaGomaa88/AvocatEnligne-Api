@@ -103,10 +103,12 @@ exports.update= async (id, Email, Adress, Ville, Presentation ,Callback) => {
   WHERE id =${id}`;
   db.query(updateDataQuery, (error, result) => {
     if (error) {
+      Callback(error,null)
       console.log("error:", error);
       return;
     } else {
       Callback(null, result);
+    
     }
   });
 };

@@ -1,9 +1,10 @@
 
 const jwt = require('jsonwebtoken');
 const SECRET = "motSecret";
-
+const { request, response } = require("express");
 const isAuth = (request, response, next) => {
-  const token = response.cookie.authcookie;
+  const token = request.cookies.authcookie;
+ 
 console.log(token)
   jwt.verify(token, SECRET, (error, avocat) => {
     if (error) {
@@ -22,6 +23,7 @@ console.log(token)
         Specialite,
         Honorare,
         exp } = avocat;
+     
 
       // Useless or not ?!
       if (Date.now() / 1000 >= exp) {
@@ -44,6 +46,47 @@ console.log(token)
         Specialite,
         Honorare,
      };
+  
+  
+
+     
+    }
+  })
+  jwt.verify(token, SECRET, (error, client) => {
+    if (error) {
+      response.send(error.message);
+    } else {
+         const {
+          clientId,
+          clientPrenom,
+          clientNom,
+          clientEmail,
+          clientPassword,
+          clientTelephone,
+          clientAdress,
+          expier } = client;
+
+      // Useless or not ?!
+      if (Date.now() / 1000 >= expier) {
+        response.clearCookie("authcookie");
+        response.json({
+           message:"Session expired. Try to reconnect you."
+        });
+      }
+
+  
+     request.client = { 
+       clientId,
+          clientPrenom,
+          clientNom,
+          clientEmail,
+          clientPassword,
+          clientTelephone,
+          clientAdress,
+     
+    };
+  
+
       next();
     }
   })

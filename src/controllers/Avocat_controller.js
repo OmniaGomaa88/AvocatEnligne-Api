@@ -230,6 +230,7 @@ exports.login = (request, response) => {
               Honorare: request.avocat.Honorare,
             },
           });
+         
         });
       });
     }
@@ -250,8 +251,10 @@ exports.updateAvocatData = (request, response) => {
         message: "le servre founuction plus.",
       });
     }
+
+    console.log("RESULT",result)
     response.status(OK).json({
-      result,
+      message:"modification réussi"
     });
   });
 };

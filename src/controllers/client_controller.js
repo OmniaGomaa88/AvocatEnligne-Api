@@ -103,14 +103,14 @@ exports.clientLogin = (request, response) => {
           });
         }
         const client = {
-          id: result[0].id,
-          prenom: result[0].Prénom,
-          nom: result[0].Nom,
-          Email: result[0].Email,
-          Password: result[0].Password,
-          Telephone: result[0].Telephone,
-          Adress: result[0].Adresse,
-          exp: MAXAGE,
+          clientId: result[0].id,
+          clientPrenom: result[0].Prénom,
+          clientNom: result[0].Nom,
+          clientEmail: result[0].Email,
+          clientPassword: result[0].Password,
+          clientTelephone: result[0].Telephone,
+          clientAdress: result[0].Adresse,
+          expier: MAXAGE,
         };
         jwt.sign(client, SECRET, (error, token) => {
           if (error) {
@@ -119,26 +119,26 @@ exports.clientLogin = (request, response) => {
             });
           }
           request.client = {
-            id: result[0].id,
-            prenom: result[0].Prénom,
-            nom: result[0].Nom,
-            Email: result[0].Email,
-            Password: result[0].Password,
-            Telephone: result[0].Telephone,
-            Adress: result[0].Adresse,
+            clientId: result[0].id,
+            clientPrenom: result[0].Prénom,
+            clientNom: result[0].Nom,
+            clientEmail: result[0].Email,
+            clientPassword: result[0].Password,
+            clientTelephone: result[0].Telephone,
+            clientAdress: result[0].Adresse,
             
           };
           response.cookie("authcookie", token, { maxAge: MAXAGE });
           response.status(OK).json({
             token: token,
             client: {
-              id: request.client.id,
-              prenom: request.client.Prénom,
-              nom: request.client.Nom,
-              Email: request.client.Email,
-              Password: request.client.Password,
-              Telephone: request.client.Telephone,
-              Adress: request.client.Adresse,
+              id: request.client.clientId,
+              prenom: request.client.clientPrenom,
+              nom: request.client.clientNom,
+              Email: request.client.clientEmail,
+              Password: request.client.clientPassword,
+              Telephone: request.client.clientTelephone,
+              Adress: request.client.clientAdress,
             },
           });
         });

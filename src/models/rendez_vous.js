@@ -40,6 +40,7 @@ exports.getClientRendezVous= async(clientId,Callback)=>{
   Avocat  inner join RendezVous
    ON Avocat.id =RendezVous.avocat_id
 where client_id=${clientId}`;
+console.log(clientId)
 db.query(getClientRendezVousQuery, (error, result) => {
   if (error) {
     Callback(error, null);
@@ -47,6 +48,7 @@ db.query(getClientRendezVousQuery, (error, result) => {
     return;
   } else {
     Callback(null, result);
+   
   }
 });
 }
