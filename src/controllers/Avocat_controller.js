@@ -274,7 +274,8 @@ exports.updateAvocatTel = (request, response) => {
   });
 };
 exports.updateAvocatHonoraire = (request, response) => {
-  const { id } = request.params;
+ 
+  const  id  = request.avocat.id;
   const Honorare = request.body.Honorare;
   Avocat.updateHonoraire(id, Honorare, (error, result) => {
     if (error) {

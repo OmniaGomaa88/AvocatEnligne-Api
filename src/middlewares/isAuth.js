@@ -4,7 +4,6 @@ const SECRET = "motSecret";
 const { request, response } = require("express");
 const isAuth = (request, response, next) => {
   const token = request.cookies.authcookie;
- 
 console.log(token)
   jwt.verify(token, SECRET, (error, avocat) => {
     if (error) {
@@ -53,6 +52,7 @@ console.log(token)
     }
   })
   jwt.verify(token, SECRET, (error, client) => {
+    const token = request.cookies.authcookie;
     if (error) {
       response.send(error.message);
     } else {

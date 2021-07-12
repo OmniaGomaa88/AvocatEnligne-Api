@@ -24,6 +24,7 @@ exports.getMesRendezVous= async(avocatId,Callback)=>{
   Clients  inner join RendezVous
    ON Clients.id =RendezVous.client_id
 where avocat_id=${avocatId}`;
+console.log(avocatId)
 db.query(getRendezVousQuery, (error, result) => {
   if (error) {
     Callback(error, null);

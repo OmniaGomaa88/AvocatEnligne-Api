@@ -8,8 +8,8 @@ const notFound = require("../helpers/stuts_code");
 const rendezVousRouter = require("../routes/rendez_vous_router")
 router.use(AvocatRouter);
 router.use(clientRouter);
-router.use(villeRouter)
-router.use(rendezVousRouter)
+router.use(villeRouter);
+router.use(rendezVousRouter);
 
 router.get("/api", (request, response) => {
   response.json({

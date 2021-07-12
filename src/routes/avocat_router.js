@@ -10,6 +10,6 @@ AvocatRouter.get("/api/specialits",avocatController.fiendAllSpecialites)
 AvocatRouter.post("/api/sigin",avocatController.login)
 AvocatRouter.post("/api/editData",isAuth,avocatController.updateAvocatData)
 AvocatRouter.post("/api/editTel",isAuth,avocatController.updateAvocatTel)
-AvocatRouter.post("/api/editHonoraire/:id",avocatController.updateAvocatHonoraire)
+AvocatRouter.post("/api/editHonoraire",isAuth,avocatController.updateAvocatHonoraire)
 
 module.exports=AvocatRouter

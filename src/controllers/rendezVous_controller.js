@@ -30,8 +30,10 @@ const { OK, SERVER_ERROR } = require("../helpers/stuts_code");
 // get avocat rendez-vous  avec client data 
 exports.findMesRendezVous=(request,response)=>{
  // pour l'instant on vais avoire avocat  id manuellement
-  let avocatId=request.avocat.id
-  console.log(avocatId)
+ const avocatId=request.avocat.id;
+ console.log('JE PASSE ICI');
+ console.log(request.avocat);
+  console.log(avocatId);
   RendezVous.getMesRendezVous(avocatId,(error,result)=>{
     if (error) {
       console.log(error);
