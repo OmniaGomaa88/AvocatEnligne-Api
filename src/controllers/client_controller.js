@@ -146,5 +146,21 @@ exports.clientLogin = (request, response) => {
     }
   });
 };
+exports.getClient=(request,response)=>{
+const clientId= request.client.clientId
+console.log(clientId)
+client.getClient(clientId,(error,result)=>{
+  if(error){
+    response.status(SERVER_ERROR).json({
+      message:"le servre founuction plus."
+    })
+  }
+  else{
+    response.status(OK).json({
+      result
+    })
+  }
+})
+}
  
   

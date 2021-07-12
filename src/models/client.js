@@ -39,4 +39,18 @@ exports.addClient = async( newClient, Callback) => {
     });
   };
 
-  
+  exports.getClient = async( clientId, Callback) => {
+    console.log(clientId)
+    let getClientQuery = await `SELECT * FROM Clients WHERE id=${clientId}`;
+    db.query(getClientQuery, (error, result) => {
+        console.log(error)
+      if (error) {
+        console.log("error:", error);
+        Callback(error, null);
+        return;
+      } else {
+        Callback(null, result);
+        console.log("result:", result);
+      }
+    });
+  };
