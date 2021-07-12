@@ -80,7 +80,7 @@ exports.findClientRendezVous=(request,response)=>{
  }
  exports.annulerParClient=(request,response)=>{
 const  avocatId=request.params.id
-const clientId= 2
+const clientId= request.client.clientId
 RendezVous.rendezVousAnnuleClient(avocatId,clientId,(error,result)=>{
   console.log(avocatId)
   if(error){
