@@ -8,10 +8,11 @@ const { OK, SERVER_ERROR } = require("../helpers/stuts_code");
    const {
      client_situation,
      date,
-    // pour l'instant on vais avoire le  client id manuellement
-     clientId,
+     heure
    } = request.body;
-   RendezVous.addRendezVous(avocatId, request.body, (error, result) => {
+ 
+ const  clientId= request.client.clientId
+   RendezVous.addRendezVous(avocatId, request.body, clientId,(error, result) => {
      if (error) {
        console.log(error);
        response.status(SERVER_ERROR).json({
@@ -29,7 +30,8 @@ const { OK, SERVER_ERROR } = require("../helpers/stuts_code");
 // get avocat rendez-vous  avec client data 
 exports.findMesRendezVous=(request,response)=>{
  // pour l'instant on vais avoire avocat  id manuellement
-  let avocatId=2
+  let avocatId=request.avocat.id
+  console.log(avocatId)
   RendezVous.getMesRendezVous(avocatId,(error,result)=>{
     if (error) {
       console.log(error);
@@ -38,19 +40,20 @@ exports.findMesRendezVous=(request,response)=>{
       });
     } else {
       response.status(OK).json({
-        id: result[0].id,
-        client:{
-        prenom:result[0].prénom,
-        nom:result[0].Nom,
-        email:result[0].Email,
-        telphone:result[0].Telephone,
-        adress:result[0].Adresse
-        },
-        RedezVous:{
-          client_situation:result[0].client_situation,
-          date:result[0].date,
-          heure:result[0].heure,
-        }
+        result
+        // id: result[0].id,
+        // client:{
+        // prenom:result[0].prénom,
+        // nom:result[0].Nom,
+        // email:result[0].Email,
+        // telphone:result[0].Telephone,
+        // adress:result[0].Adresse
+        // },
+        // RedezVous:{
+          // client_situation:result[0].client_situation,
+          // date:result[0].date,
+          // heure:result[0].heure,
+        // }
       });
     }
   })
