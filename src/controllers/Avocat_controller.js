@@ -259,7 +259,7 @@ exports.updateAvocatData = (request, response) => {
   });
 };
 exports.updateAvocatTel = (request, response) => {
-  const { id } = request.params;
+  const  id  = request.avocat.id;
   const Telephone = request.body.Telephone;
   Avocat.updateTel(id, Telephone, (error, result) => {
     if (error) {
