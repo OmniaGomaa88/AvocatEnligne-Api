@@ -1,10 +1,9 @@
-
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const SECRET = "motSecret";
 const { request, response } = require("express");
 const isAuth = (request, response, next) => {
   const token = request.cookies.authcookie;
-console.log(token)
+  console.log(token);
   jwt.verify(token, SECRET, (error, avocat) => {
     if (error) {
       response.send(error.message);
@@ -21,18 +20,19 @@ console.log(token)
         Presentation,
         Specialite,
         Honorare,
-        exp } = avocat;
-     
+        image,
+        exp,
+      } = avocat;
 
       // Useless or not ?!
       if (Date.now() / 1000 >= exp) {
         response.clearCookie("authcookie");
         response.json({
-           message:"Session expired. Try to reconnect you."
+          message: "Session expired. Try to reconnect you.",
         });
       }
 
-      request.avocat = { 
+      request.avocat = {
         id,
         prenom,
         nom,
@@ -44,52 +44,47 @@ console.log(token)
         Presentation,
         Specialite,
         Honorare,
-     };
-  
-  
-
-     
+        image
+      };
     }
-  })
+  });
   jwt.verify(token, SECRET, (error, client) => {
     const token = request.cookies.authcookie;
     if (error) {
       response.send(error.message);
     } else {
-         const {
-          clientId,
-          clientPrenom,
-          clientNom,
-          clientEmail,
-          clientPassword,
-          clientTelephone,
-          clientAdress,
-          expier } = client;
+      const {
+        clientId,
+        clientPrenom,
+        clientNom,
+        clientEmail,
+        clientPassword,
+        clientTelephone,
+        clientAdress,
+        expier,
+      } = client;
 
       // Useless or not ?!
       if (Date.now() / 1000 >= expier) {
         response.clearCookie("authcookie");
         response.json({
-           message:"Session expired. Try to reconnect you."
+          message: "Session expired. Try to reconnect you.",
         });
       }
 
-  
-     request.client = { 
-       clientId,
-          clientPrenom,
-          clientNom,
-          clientEmail,
-          clientPassword,
-          clientTelephone,
-          clientAdress,
-     
-    };
-  
+      request.client = {
+        clientId,
+        clientPrenom,
+        clientNom,
+        clientEmail,
+        clientPassword,
+        clientTelephone,
+        clientAdress,
+      };
 
       next();
     }
-  })
+  });
 };
 
 module.exports = isAuth;

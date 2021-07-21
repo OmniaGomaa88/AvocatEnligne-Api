@@ -59,8 +59,9 @@ exports.newAvocat = (request, response) => {
     Presentation,
     Specialite,
     Honorare,
+    image,
   } = request.body;
-  console.log(request.body);
+  console.log("request Body", request.body);
 
   let SpecialiteId = 0;
   let villId = 0;
@@ -107,6 +108,7 @@ exports.newAvocat = (request, response) => {
                 Presentation,
                 Specialite,
                 Honorare,
+                image,
               };
               console.log("neAvocat object:", newAvocat);
               Avocat.addAvocat(
@@ -130,6 +132,7 @@ exports.newAvocat = (request, response) => {
                     Presentation: newAvocat.Presentation,
                     Specialite: newAvocat.Specialite,
                     Honorare: newAvocat.Honorare,
+                    image: newAvocat.image,
                   });
                   console.log(result);
                 }
@@ -154,11 +157,11 @@ exports.fiendAllSpecialites = (request, response) => {
       });
   });
 };
-// login de avocat 
+// login de avocat
 exports.login = (request, response) => {
-  const { Email, password } = request.body;
+  const { email, password } = request.body;
   console.log(request.body);
-  Avocat.selectEmail(Email, (error, result) => {
+  Avocat.selectEmail(email, (error, result) => {
     if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
@@ -192,6 +195,7 @@ exports.login = (request, response) => {
           Presentation: result[0].Presentation,
           Specialite: result[0].Spécialité,
           Honorare: result[0].Honorare,
+          image: result[0].image,
           exp: MAXAGE,
         };
         jwt.sign(avocat, SECRET, (error, token) => {
@@ -212,25 +216,24 @@ exports.login = (request, response) => {
             Presentation: result[0].Presentation,
             Specialite: result[0].Spécialité,
             Honorare: result[0].Honorare,
+            image: result[0].image,
           };
           response.cookie("authcookie", token, { maxAge: MAXAGE });
           response.status(OK).json({
             token: token,
-            avocat: {
-              id: request.avocat.id,
-              prenom: request.avocat.Prénom,
-              nom: request.avocat.Nom,
-              Email: request.avocat.Email,
-              Password: request.avocat.Password,
-              Telephone: request.avocat.Telephone,
-              Adress: request.avocat.Adress,
-              Ville: request.avocat.Ville,
-              Presentation: request.avocat.Presentation,
-              Specialite: request.avocat.Spécialité,
-              Honorare: request.avocat.Honorare,
-            },
+            id: request.avocat.id,
+            prenom: request.avocat.Prénom,
+            nom: request.avocat.Nom,
+            Email: request.avocat.Email,
+            Password: request.avocat.Password,
+            Telephone: request.avocat.Telephone,
+            Adress: request.avocat.Adress,
+            Ville: request.avocat.Ville,
+            Presentation: request.avocat.Presentation,
+            Specialite: request.avocat.Spécialité,
+            Honorare: request.avocat.Honorare,
+            image: request.avocat.image,
           });
-         
         });
       });
     }
@@ -240,7 +243,7 @@ exports.login = (request, response) => {
 // ubdate data
 
 exports.updateAvocatData = (request, response) => {
-  const  id  = request.avocat.id;
+  const id = request.avocat.id;
   const Email = request.body.Email;
   const Adress = request.body.Adress;
   const Ville = request.body.Ville;
@@ -252,21 +255,21 @@ exports.updateAvocatData = (request, response) => {
       });
     }
 
-    console.log("RESULT",result)
+    console.log("RESULT", result);
     response.status(OK).json({
-      message:"modification réussi"
+      message: "modification réussi",
     });
   });
 };
 exports.updateAvocatTel = (request, response) => {
-  const  id  = request.avocat.id;
+  const id = request.avocat.id;
   const Telephone = request.body.Telephone;
   Avocat.updateTel(id, Telephone, (error, result) => {
     if (error) {
       console.log(error);
-      // response.status(SERVER_ERROR).json({
-      // message: "le servre founuction plus.",
-      // });
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      });
     }
     response.status(OK).json({
       result,
@@ -274,8 +277,7 @@ exports.updateAvocatTel = (request, response) => {
   });
 };
 exports.updateAvocatHonoraire = (request, response) => {
- 
-  const  id  = request.avocat.id;
+  const id = request.avocat.id;
   const Honorare = request.body.Honorare;
   Avocat.updateHonoraire(id, Honorare, (error, result) => {
     if (error) {

@@ -1,65 +1,63 @@
 const db = require("../db/db");
- exports.addRendezVous = async (avocatId, data,clientId, Callback) => {
-   let addRendezVousdQuery = await `INSERT INTO RendezVous 
+exports.addRendezVous = async (avocatId, data, Callback) => {
+  let addRendezVousdQuery = await `INSERT INTO RendezVous 
      (client_situation,date,heure,avocat_id,client_id) VALUES
      ("${data.client_situation}",
      "${data.date}",
      "${data.heure}",
      "${avocatId}",
-     "${clientId}");`;
-   db.query(addRendezVousdQuery, (error, result) => {
-     if (error) {
+     "${data.clientId}");`;
+  db.query(addRendezVousdQuery, (error, result) => {
+    if (error) {
       Callback(error, null);
       console.log("error:", error);
       return;
     } else {
-      console.log(result)
-       Callback(null, result);
+      console.log(result);
+      Callback(null, result);
     }
- });
+  });
 };
-// get avocat rendez-vous  avec client data 
-exports.getMesRendezVous= async(avocatId,Callback)=>{
+// get avocat rendez-vous  avec client data
+exports.getMesRendezVous = async (avocatId, Callback) => {
   let getRendezVousQuery = await `SELECT * FROM
   Clients  inner join RendezVous
    ON Clients.id =RendezVous.client_id
 where avocat_id=${avocatId}`;
-console.log(avocatId)
-db.query(getRendezVousQuery, (error, result) => {
-  if (error) {
-    Callback(error, null);
-    console.log("error:", error);
-    return;
-  } else {
-    console.log(result)
-    Callback(null, result);
-  }
-});
-}
-// get client rendez-vous  avec avocat data 
-exports.getClientRendezVous= async(clientId,Callback)=>{
+  console.log(avocatId);
+  db.query(getRendezVousQuery, (error, result) => {
+    if (error) {
+      Callback(error, null);
+      console.log("error:", error);
+      return;
+    } else {
+      console.log(result);
+      Callback(null, result);
+    }
+  });
+};
+// get client rendez-vous  avec avocat data
+exports.getClientRendezVous = async (clientId, Callback) => {
   let getClientRendezVousQuery = await `SELECT * FROM
   Avocat  inner join RendezVous
    ON Avocat.id =RendezVous.avocat_id
 where client_id=${clientId}`;
-console.log(clientId)
-db.query(getClientRendezVousQuery, (error, result) => {
-  if (error) {
-    Callback(error, null);
-    console.log("error:", error);
-    return;
-  } else {
-    Callback(null, result);
-   
-  }
-});
-}
+  console.log(clientId);
+  db.query(getClientRendezVousQuery, (error, result) => {
+    if (error) {
+      Callback(error, null);
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+    }
+  });
+};
 // annuler rendez-vous par client
-exports.rendezVousAnnuleClient=async(rendezVousId,clientId,Callback)=>{
-   
+exports.rendezVousAnnuleClient = async (rendezVousId, clientId, Callback) => {
   let rendezVousAnnuleClient = await `UPDATE RendezVous SET
   annulé=true
-  WHERE id=${rendezVousId} AND client_id=${clientId}`
+  WHERE id=${rendezVousId} AND client_id=${clientId}`;
   db.query(rendezVousAnnuleClient, (error, result) => {
     if (error) {
       Callback(error, null);
@@ -67,17 +65,14 @@ exports.rendezVousAnnuleClient=async(rendezVousId,clientId,Callback)=>{
       return;
     } else {
       Callback(null, result);
-      
     }
   });
-  
-}
+};
 // annuler rendez-vous par avocat
-exports.rendezVousAnnuleAvocat=async(rendezVousId,avocatId,Callback)=>{
-   
+exports.rendezVousAnnuleAvocat = async (rendezVousId, avocatId, Callback) => {
   let rendezVousAnnuleAvocat = await `UPDATE RendezVous SET
   annulé=false
-  WHERE id=${rendezVousId} AND  avocat_id=${avocatId}`
+  WHERE id=${rendezVousId} AND  avocat_id=${avocatId}`;
   db.query(rendezVousAnnuleAvocat, (error, result) => {
     if (error) {
       Callback(error, null);
@@ -85,8 +80,6 @@ exports.rendezVousAnnuleAvocat=async(rendezVousId,avocatId,Callback)=>{
       return;
     } else {
       Callback(null, result);
-      
     }
   });
-  
-}
+};

@@ -6,14 +6,14 @@ const router= require("./routes/index")
 const cookie=require("cookie-parser")
 
 const server = express();
-
+server.use(cors())
 server.use(cookie())
 server.use(express.json());
 
 server.use(express.urlencoded({extended: false}));
-server.use(cors())
+
 server.use(router)
-server.listen(3000, () => {
+server.listen(8080, () => {
     console.log('Connexion !');
 })
 
