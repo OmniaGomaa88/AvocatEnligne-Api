@@ -6,7 +6,7 @@ const router= require("./routes/index")
 const cookie=require("cookie-parser")
 
 const server = express();
-server.use(cors())
+server.use(cors({credentials: true}))
 server.use(cookie())
 server.use(express.json());
 

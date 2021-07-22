@@ -5,7 +5,7 @@ const isAuth = require("../middlewares/isAuth");
 const rendezVous_controuller = require("../controllers/rendezVous_controller");
 rendezVousRouter.post(
   "/api/addRendezVous/:id",
-
+isAuth,
   rendezVous_controuller.newRendezVous
 );
 rendezVousRouter.get(

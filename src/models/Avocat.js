@@ -43,7 +43,7 @@ exports.selectEmail = async (email, Callback) => {
       return;
     } else {
       Callback(null, result);
-      console.log(result);
+      
     }
   });
 };
@@ -67,8 +67,6 @@ exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
          "${villId}",
          "${newAvocat.image}"
          );`;
-  console.log("the SpecialiteId in addAvocat:", SpecialiteId);
-  console.log("the villId in addAvocat:", villId);
   console.log(newAvocat.Password);
   db.query(AddAvocatQuery, (error, result) => {
     if (error) {

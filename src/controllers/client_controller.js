@@ -76,7 +76,6 @@ exports.clientLogin = (request, response) => {
         message: "le servre founuction plus.",
       });
     } else if (result.length === 0) {
-      console.log(result)
       response.status(UNAUTHORIZED).json({
         message: "email n'exist pas",
       });
@@ -88,28 +87,13 @@ exports.clientLogin = (request, response) => {
         if (error) {
           console.log(error);
         }
-        if (!correct) {
+      else  if (!correct) {
           response.status(UNAUTHORIZED).json({
             message: "votre mot de pass n'est pas correct",
           });
         }
-        const client = {
-          clientId: result[0].id,
-          clientPrenom: result[0].Prénom,
-          clientNom: result[0].Nom,
-          clientEmail: result[0].Email,
-          clientPassword: result[0].Password,
-          clientTelephone: result[0].Telephone,
-          clientAdress: result[0].Adresse,
-          expier: MAXAGE,
-        };
-        jwt.sign(client, SECRET, (error, token) => {
-          if (error) {
-            response.status(SERVER_ERROR).json({
-              message: "le servre founuction plus.",
-            });
-          }
-          request.client = {
+        else{
+          const client = {
             clientId: result[0].id,
             clientPrenom: result[0].Prénom,
             clientNom: result[0].Nom,
@@ -117,21 +101,38 @@ exports.clientLogin = (request, response) => {
             clientPassword: result[0].Password,
             clientTelephone: result[0].Telephone,
             clientAdress: result[0].Adresse,
+            expier: MAXAGE,
           };
-          response.cookie("authcookie", token, { maxAge: MAXAGE });
-
-          response.status(OK).json({
-            token: token,
-              id: request.client.clientId,
-              prenom: request.client.clientPrenom,
-              nom: request.client.clientNom,
-              Email: request.client.clientEmail,
-              Password: request.client.clientPassword,
-              Telephone: request.client.clientTelephone,
-              Adress: request.client.clientAdress,
-            
+          jwt.sign(client, SECRET, (error, token) => {
+            if (error) {
+              response.status(SERVER_ERROR).json({
+                message: "le servre founuction plus.",
+              });
+            }
+            request.client = {
+              clientId: result[0].id,
+              clientPrenom: result[0].Prénom,
+              clientNom: result[0].Nom,
+              clientEmail: result[0].Email,
+              clientPassword: result[0].Password,
+              clientTelephone: result[0].Telephone,
+              clientAdress: result[0].Adresse,
+            };
+  
+            response.status(OK).json({
+                token: token,
+                id: request.client.clientId,
+                prenom: request.client.clientPrenom,
+                nom: request.client.clientNom,
+                Email: request.client.clientEmail,
+                Password: request.client.clientPassword,
+                Telephone: request.client.clientTelephone,
+                Adress: request.client.clientAdress,
+              
+            });
+            console.log("token",token)
           });
-        });
+        } 
       });
     }
   });

@@ -10,7 +10,7 @@ exports.selectEmail =  (email, Callback) => {
       return;
     } else {
       Callback(null, result);
-      console.log("result:", result);
+     
     }
   });
 };

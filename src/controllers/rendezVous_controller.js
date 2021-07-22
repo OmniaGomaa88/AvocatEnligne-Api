@@ -8,6 +8,7 @@ exports.newRendezVous = (request, response) => {
   const { client_situation, date, heure } = request.body;
 
   const clientId = request.body;
+  console.log("client id in controller",clientId);
   RendezVous.addRendezVous(
     avocatId,
     request.body,
