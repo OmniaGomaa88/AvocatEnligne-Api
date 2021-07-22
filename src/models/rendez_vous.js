@@ -1,12 +1,12 @@
 const db = require("../db/db");
-exports.addRendezVous = async (avocatId, data, Callback) => {
+exports.addRendezVous = async (avocatId, data,clientId, Callback) => {
   let addRendezVousdQuery = await `INSERT INTO RendezVous 
      (client_situation,date,heure,avocat_id,client_id) VALUES
      ("${data.client_situation}",
      "${data.date}",
      "${data.heure}",
      "${avocatId}",
-     "${data.clientId}");`;
+     "${clientId}");`;
   db.query(addRendezVousdQuery, (error, result) => {
     if (error) {
       Callback(error, null);
