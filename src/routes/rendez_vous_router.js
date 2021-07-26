@@ -1,31 +1,32 @@
 const express = require("express");
 const { request, response } = require("express");
 const rendezVousRouter = express.Router();
-const isAuth = require("../middlewares/isAuth");
+const isAuthClient = require("../middlewares/isAuthClient");
+const isAuthAvocat =require('../middlewares/isAuthAvocat')
+
 const rendezVous_controuller = require("../controllers/rendezVous_controller");
 rendezVousRouter.post(
   "/api/addRendezVous/:id",
-isAuth,
+  isAuthClient,
   rendezVous_controuller.newRendezVous
 );
 rendezVousRouter.get(
   "/api/RendezVous",
-  isAuth,
+  isAuthAvocat,
   rendezVous_controuller.findMesRendezVous
 );
 rendezVousRouter.get(
   "/api/client/RendezVous",
-  isAuth,
+  isAuthClient,
   rendezVous_controuller.findClientRendezVous
 );
 rendezVousRouter.post(
   "/api/client/Annule/:id",
-  isAuth,
+  isAuthClient,
   rendezVous_controuller.annulerParClient
 );
 rendezVousRouter.post(
-  "/api/Annule/:id",
-  isAuth,
+  "/api/Annule/:id",isAuthAvocat,
   rendezVous_controuller.annulerParAvocat
 );
 

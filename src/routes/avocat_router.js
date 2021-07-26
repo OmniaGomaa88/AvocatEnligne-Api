@@ -1,7 +1,7 @@
 const express = require("express");
 const { request, response } = require("express");
 const AvocatRouter = express.Router();
-const isAuth = require("../middlewares/isAuth");
+const isAuthAvocat =require('../middlewares/isAuthAvocat')
 const avocatController = require("../controllers/Avocat_controller");
 AvocatRouter.post("/api/signup", avocatController.newAvocat);
 AvocatRouter.get(
@@ -9,13 +9,15 @@ AvocatRouter.get(
   avocatController.getAllAvocat
 );
 AvocatRouter.get("/api/avocat/:id", avocatController.getAvocatById);
+AvocatRouter.get("/api/avocatprofile", isAuthAvocat,avocatController.getAvocatData);
+
 AvocatRouter.get("/api/specialits", avocatController.fiendAllSpecialites);
 AvocatRouter.post("/api/sigin", avocatController.login);
-AvocatRouter.post("/api/editData", isAuth, avocatController.updateAvocatData);
-AvocatRouter.post("/api/editTel", isAuth, avocatController.updateAvocatTel);
+AvocatRouter.post("/api/editData",isAuthAvocat, avocatController.updateAvocatData);
+AvocatRouter.post("/api/editTel",isAuthAvocat, avocatController.updateAvocatTel);
 AvocatRouter.post(
   "/api/editHonoraire",
-  isAuth,
+  isAuthAvocat,
   avocatController.updateAvocatHonoraire
 );
 

@@ -121,11 +121,12 @@ exports.clientLogin = (request, response) => {
   
             response.status(OK).json({
                 token: token,
+                isClient: true,
+                isAvocat:false,
                 id: request.client.clientId,
                 prenom: request.client.clientPrenom,
                 nom: request.client.clientNom,
                 Email: request.client.clientEmail,
-                Password: request.client.clientPassword,
                 Telephone: request.client.clientTelephone,
                 Adress: request.client.clientAdress,
               

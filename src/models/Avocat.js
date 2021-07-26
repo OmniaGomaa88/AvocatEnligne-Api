@@ -91,6 +91,20 @@ exports.getAllSpecialite = async (Callback) => {
     }
   });
 };
+exports.getAvocat = async (avocaId, Callback) => {
+  let getAvocatQuery = await `SELECT * FROM Avocat WHERE id=${avocaId}`;
+  db.query(getAvocatQuery, (error, result) => {
+    console.log(error);
+    if (error) {
+      console.log("error:", error);
+      Callback(error, null);
+      return;
+    } else {
+      Callback(null, result);
+      
+    }
+  });
+};
 
 exports.update = async (id, Email, Adress, Ville, Presentation, Callback) => {
   let updateDataQuery = await `UPDATE Avocat SET

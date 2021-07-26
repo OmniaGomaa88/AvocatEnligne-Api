@@ -21,9 +21,7 @@ exports.newRendezVous = (request, response) => {
         });
       } else {
         response.status(OK).json({
-          client_situation: request.body.client_situation,
-          date: request.body.date,
-          heure: request.body.heure,
+         result
         });
       }
     }
@@ -33,7 +31,6 @@ exports.newRendezVous = (request, response) => {
 exports.findMesRendezVous = (request, response) => {
   // pour l'instant on vais avoire avocat  id manuellement
   const avocatId = request.avocat.id;
-  console.log("JE PASSE ICI");
   console.log(request.avocat);
   console.log(avocatId);
   RendezVous.getMesRendezVous(avocatId, (error, result) => {
