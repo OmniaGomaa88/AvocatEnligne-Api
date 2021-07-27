@@ -106,11 +106,10 @@ exports.getAvocat = async (avocaId, Callback) => {
   });
 };
 
-exports.update = async (id, Email, Adress, Ville, Presentation, Callback) => {
+exports.update = async (id, Email, Adress, Presentation, Callback) => {
   let updateDataQuery = await `UPDATE Avocat SET
   Email="${Email}",
   Adress="${Adress}",
-  Ville="${Ville}",
   Presentation="${Presentation}"
   WHERE id =${id}`;
   db.query(updateDataQuery, (error, result) => {

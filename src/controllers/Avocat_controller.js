@@ -254,7 +254,7 @@ exports.updateAvocatData = (request, response) => {
   const Adress = request.body.Adress;
   const Ville = request.body.Ville;
   const Presentation = request.body.Presentation;
-  Avocat.update(id, Email, Adress, Ville, Presentation, (error, result) => {
+  Avocat.update(id, Email, Adress, Presentation, (error, result) => {
     if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",

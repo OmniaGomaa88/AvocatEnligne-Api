@@ -101,7 +101,7 @@ exports.clientLogin = (request, response) => {
             clientPassword: result[0].Password,
             clientTelephone: result[0].Telephone,
             clientAdress: result[0].Adresse,
-            expier: MAXAGE,
+            
           };
           jwt.sign(client, SECRET, (error, token) => {
             if (error) {

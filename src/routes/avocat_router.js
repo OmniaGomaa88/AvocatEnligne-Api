@@ -13,8 +13,8 @@ AvocatRouter.get("/api/avocatprofile", isAuthAvocat,avocatController.getAvocatDa
 
 AvocatRouter.get("/api/specialits", avocatController.fiendAllSpecialites);
 AvocatRouter.post("/api/sigin", avocatController.login);
-AvocatRouter.post("/api/editData",isAuthAvocat, avocatController.updateAvocatData);
-AvocatRouter.post("/api/editTel",isAuthAvocat, avocatController.updateAvocatTel);
+AvocatRouter.put("/api/editData",isAuthAvocat, avocatController.updateAvocatData);
+AvocatRouter.put("/api/editTel",isAuthAvocat, avocatController.updateAvocatTel);
 AvocatRouter.post(
   "/api/editHonoraire",
   isAuthAvocat,
