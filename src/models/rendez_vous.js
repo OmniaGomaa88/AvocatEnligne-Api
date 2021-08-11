@@ -1,10 +1,11 @@
 const db = require("../db/db");
+
+
 exports.addRendezVous = async (avocatId, data,clientId, Callback) => {
   let addRendezVousdQuery = await `INSERT INTO RendezVous 
-     (client_situation,date,heure,avocat_id,client_id) VALUES
+     (client_situation,date,avocat_id,client_id) VALUES
      ("${data.client_situation}",
      "${data.date}",
-     "${data.heure}",
      "${avocatId}",
      "${clientId}");`;
   db.query(addRendezVousdQuery, (error, result) => {
@@ -24,7 +25,6 @@ exports.getMesRendezVous = async (avocatId, Callback) => {
   Clients  inner join RendezVous
    ON Clients.id =RendezVous.client_id
 where avocat_id=${avocatId}`;
-  console.log(avocatId);
   db.query(getRendezVousQuery, (error, result) => {
     if (error) {
       Callback(error, null);
@@ -72,7 +72,7 @@ exports.rendezVousAnnuleClient = async (rendezVousId, clientId, Callback) => {
 exports.rendezVousAnnuleAvocat = async (rendezVousId, avocatId, Callback) => {
   let rendezVousAnnuleAvocat = await `UPDATE RendezVous SET
   annulé=false
-  WHERE id=${rendezVousId} AND  avocat_id=${avocatId}`;
+  WHERE RendezVous.id =${rendezVousId} AND  avocat_id=${avocatId}`;
   db.query(rendezVousAnnuleAvocat, (error, result) => {
     if (error) {
       Callback(error, null);

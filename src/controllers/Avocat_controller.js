@@ -17,11 +17,23 @@ const {
 } = require("../helpers/stuts_code");
 const { json } = require("body-parser");
 
+
 exports.getAllAvocat = (request, response) => {
   const ville = request.params.ville;
   const Specialite = request.params.Specialite;
-
   Avocat.getAll(ville, Specialite, (error, result) => {
+    if (error) {
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      });
+    } else
+      response.status(OK).json({
+        result,
+      });
+  });
+};
+exports.findNouveuxAvocat = (request, response) => {
+  Avocat.getNouveauxAvocat((error, result) => {
     if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
@@ -61,21 +73,17 @@ exports.newAvocat = (request, response) => {
     Honorare,
     image,
   } = request.body;
-  console.log("request Body", request.body);
-
-  let SpecialiteId = 0;
-  let villId = 0;
   Avocat.selectSpecialiteId(Specialite, (error, result) => {
     if (error) {
       console.log(error);
     }
-    SpecialiteId = result[0].id;
+    let SpecialiteId = result[0].id;
 
     ville.villId(Ville, (error, result) => {
       if (error) {
         console.log(error);
       }
-      villId = result[0].id;
+      let villId = result[0].id;
       Avocat.selectEmail(Email, (error, result) => {
         console.log(result);
         if (error) {
@@ -106,7 +114,6 @@ exports.newAvocat = (request, response) => {
                 Honorare,
                 image,
               };
-              console.log("neAvocat object:", newAvocat);
               Avocat.addAvocat(
                 SpecialiteId,
                 villId,
@@ -168,9 +175,7 @@ exports.login = (request, response) => {
     } else {
       const hash = result[0].Password;
       bcrypt.compare(password, hash, (error, correct) => {
-       
         if (error) {
-          console.log(error);
         } else if (!correct) {
           response.status(UNAUTHORIZED).json({
             message: "votre mot de pass n'est pas correct",
@@ -211,8 +216,8 @@ exports.login = (request, response) => {
             };
             response.status(OK).json({
               token: token,
-              isClient:false,
-              isAvocat:true,
+              isClient: false,
+              isAvocat: true,
               id: request.avocat.id,
               prenom: request.avocat.Prénom,
               nom: request.avocat.Nom,
@@ -232,7 +237,7 @@ exports.login = (request, response) => {
   });
 };
 // get data of avocat connectée
-exports.getAvocatData= (request, response) => {
+exports.getAvocatData = (request, response) => {
   const avocatId = request.avocat.id;
   Avocat.getAvocat(avocatId, (error, result) => {
     if (error) {

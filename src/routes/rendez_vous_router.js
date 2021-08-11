@@ -5,11 +5,15 @@ const isAuthClient = require("../middlewares/isAuthClient");
 const isAuthAvocat =require('../middlewares/isAuthAvocat')
 
 const rendezVous_controuller = require("../controllers/rendezVous_controller");
+
+
 rendezVousRouter.post(
   "/api/addRendezVous/:id",
   isAuthClient,
   rendezVous_controuller.newRendezVous
 );
+
+
 rendezVousRouter.get(
   "/api/RendezVous",
   isAuthAvocat,
@@ -20,11 +24,14 @@ rendezVousRouter.get(
   isAuthClient,
   rendezVous_controuller.findClientRendezVous
 );
+
 rendezVousRouter.post(
-  "/api/client/Annule/:id",
+  "/api/client/Annule",
   isAuthClient,
   rendezVous_controuller.annulerParClient
 );
+
+
 rendezVousRouter.post(
   "/api/Annule/:id",isAuthAvocat,
   rendezVous_controuller.annulerParAvocat

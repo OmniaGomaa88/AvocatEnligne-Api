@@ -11,6 +11,17 @@ exports.getAll = async (ville, Specialite, Callback) => {
     }
   });
 };
+exports.getNouveauxAvocat =  ( Callback) => {
+  let getNouveuxQuery =  " SELECT * FROM Avocat ORDER BY Avocat.id DESC LIMIT 3 ";
+  db.query(getNouveuxQuery, (error, result) => {
+    if (error) {
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+    }
+  });
+};
 exports.getById = async (id, Callback) => {
   let getById = await `SELECT * From Avocat WHERE id="${id}"`;
   db.query(getById, (error, result) => {
@@ -48,8 +59,8 @@ exports.selectEmail = async (email, Callback) => {
   });
 };
 // add new avocat
-exports.addAvocat = async (SpecialiteId, villId, newAvocat, Callback) => {
-  let AddAvocatQuery = await `INSERT INTO Avocat 
+exports.addAvocat =  (SpecialiteId, villId, newAvocat, Callback) => {
+  let AddAvocatQuery = `INSERT INTO Avocat 
   (Prénom,Nom,Email,Password,
        Telephone,Adress,Ville,Presentation,Spécialité,
         Honorare, Spécialité_id, Ville_id,image) VALUES

@@ -1,6 +1,6 @@
 const db = require("../db/db");
-exports.villId = async (Ville, Callback) => {
-    let villIdQuery = await `SELECT id FROM Ville WHERE nom ="${Ville}"`;
+exports.villId =  (Ville, Callback) => {
+    let villIdQuery =  `SELECT id FROM Ville WHERE nom ="${Ville}"`;
     db.query(villIdQuery, (error, result) => {
       if (error) {
         console.log("error:", error);

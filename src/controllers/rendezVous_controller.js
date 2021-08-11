@@ -4,11 +4,8 @@ const { OK, SERVER_ERROR } = require("../helpers/stuts_code");
 //
 exports.newRendezVous = (request, response) => {
   const avocatId = request.params.id;
-
-  const { client_situation, date, heure } = request.body;
-
+  const { client_situation, date } = request.body;
   const clientId = request.client.clientId;
-  console.log("client id in controller",clientId);
   RendezVous.addRendezVous(
     avocatId,
     request.body,
@@ -29,10 +26,7 @@ exports.newRendezVous = (request, response) => {
 };
 // get avocat rendez-vous  avec client data
 exports.findMesRendezVous = (request, response) => {
-  // pour l'instant on vais avoire avocat  id manuellement
   const avocatId = request.avocat.id;
-  console.log(request.avocat);
-  console.log(avocatId);
   RendezVous.getMesRendezVous(avocatId, (error, result) => {
     if (error) {
       console.log(error);
@@ -48,7 +42,6 @@ exports.findMesRendezVous = (request, response) => {
 };
 // get client rendez-vous  avec avocat data
 exports.findClientRendezVous = (request, response) => {
-  // pour l'instant on vais avoire client Id   manuellement
   const clientId = request.client.clientId;
   console.log(request);
   RendezVous.getClientRendezVous(clientId, (error, result) => {
@@ -65,7 +58,7 @@ exports.findClientRendezVous = (request, response) => {
   });
 };
 exports.annulerParClient = (request, response) => {
-  const rendezVousId = request.params.id;
+  const rendezVousId = request.body.rendezVousId;
   const clientId = request.client.clientId;
   RendezVous.rendezVousAnnuleClient(rendezVousId, clientId, (error, result) => {
     if (error) {
@@ -73,7 +66,7 @@ exports.annulerParClient = (request, response) => {
         message: "le servre founuction plus.",
       });
     } else {
-      response.status(OK).json({
+      response.status(OK).send({
         message: "le rendez-vous est annulé.",
       });
     }
