@@ -153,3 +153,20 @@ exports.getClient = (request, response) => {
     }
   });
 };
+exports.updateClientData = (request, response) => {
+  const id = request.client.clientId;
+  const adress = request.body.adress;
+  const telephone = request.body.telephone;
+  client.updateClient(id, adress, telephone, (error, result) => {
+    if (error) {
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      });
+    }
+
+    console.log("RESULT", result);
+    response.status(OK).json({
+      message: "modification réussi",
+    });
+  });
+};

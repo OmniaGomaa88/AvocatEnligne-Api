@@ -4,7 +4,7 @@ const { OK, SERVER_ERROR } = require("../helpers/stuts_code");
 //
 exports.newRendezVous = (request, response) => {
   const avocatId = request.params.id;
-  const { client_situation, date } = request.body;
+  const { client_situation, date} = request.body;
   const clientId = request.client.clientId;
   RendezVous.addRendezVous(
     avocatId,
@@ -73,7 +73,7 @@ exports.annulerParClient = (request, response) => {
   });
 };
 exports.annulerParAvocat = (request, response) => {
-  const rendezVousId = request.params.id;
+  const rendezVousId = request.body.rendezVousId;
   const avocatId = request.avocat.id;
   RendezVous.rendezVousAnnuleClient(avocatId, rendezVousId, (error, result) => {
     console.log(avocatId);

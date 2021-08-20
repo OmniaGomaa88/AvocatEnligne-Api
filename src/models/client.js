@@ -54,3 +54,18 @@ exports.getClient = async (clientId, Callback) => {
     }
   });
 };
+exports.updateClient = async (id,adress, telephone, Callback) => {
+  let updateDataClient = await `UPDATE Clients SET
+  Adresse="${adress}",
+  Telephone="${telephone}"
+  WHERE id =${id}`;
+  db.query(updateDataClient, (error, result) => {
+    if (error) {
+      Callback(error, null);
+      console.log("error:", error);
+      return;
+    } else {
+      Callback(null, result);
+    }
+  });
+};

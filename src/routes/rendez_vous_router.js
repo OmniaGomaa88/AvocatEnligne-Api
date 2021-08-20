@@ -33,7 +33,7 @@ rendezVousRouter.post(
 
 
 rendezVousRouter.post(
-  "/api/Annule/:id",isAuthAvocat,
+  "/api/Annule",isAuthAvocat,
   rendezVous_controuller.annulerParAvocat
 );
 

@@ -59,6 +59,9 @@ exports.getAvocatById = (request, response) => {
     }
   });
 };
+
+
+
 exports.newAvocat = (request, response) => {
   const {
     prenom,
@@ -114,6 +117,10 @@ exports.newAvocat = (request, response) => {
                 Honorare,
                 image,
               };
+
+
+             
+
               Avocat.addAvocat(
                 SpecialiteId,
                 villId,
@@ -137,6 +144,7 @@ exports.newAvocat = (request, response) => {
                     Honorare: newAvocat.Honorare,
                     image: newAvocat.image,
                   });
+                
                   console.log(result);
                 }
               );
@@ -272,6 +280,7 @@ exports.updateAvocatData = (request, response) => {
     });
   });
 };
+
 exports.updateAvocatTel = (request, response) => {
   const id = request.avocat.id;
   const Telephone = request.body.Telephone;
