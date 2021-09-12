@@ -18,7 +18,7 @@ const isAuthAvocat = (request, response, next) => {
         Presentation,
         Specialite,
         Honorare,
-        image,
+       
       } = avocat;
 
       request.avocat = {
@@ -32,7 +32,7 @@ const isAuthAvocat = (request, response, next) => {
         Presentation,
         Specialite,
         Honorare,
-        image,
+       
       };
       next();
     }

@@ -11,8 +11,9 @@ exports.getAll = async (ville, Specialite, Callback) => {
     }
   });
 };
-exports.getNouveauxAvocat =  ( Callback) => {
-  let getNouveuxQuery =  " SELECT * FROM Avocat ORDER BY Avocat.id DESC LIMIT 3 ";
+exports.getNouveauxAvocat = (Callback) => {
+  let getNouveuxQuery =
+    " SELECT * FROM Avocat ORDER BY Avocat.id DESC LIMIT 3 ";
   db.query(getNouveuxQuery, (error, result) => {
     if (error) {
       console.log("error:", error);
@@ -54,7 +55,6 @@ exports.selectEmail = async (email, Callback) => {
       return;
     } else {
       Callback(null, result);
-      
     }
   });
 };
@@ -90,6 +90,21 @@ exports.addAvocat =  (SpecialiteId, villId, newAvocat, Callback) => {
     }
   });
 };
+// exports.uploadAvocatImage = (selectedFile, Callback) => {
+//   let AddAvocatImage = `INSERT INTO Avocat 
+//   (image) VALUES
+//          ("${selectedFile}");`;
+//   db.query(AddAvocatImage, (error, result) => {
+//     if (error) {
+//       console.log("error:", error);
+//       Callback(error, null);
+//       return;
+//     } else {
+//       Callback(null, result);
+//       console.log("result:", result);
+//     }
+//   });
+// };
 // select all spicialite
 exports.getAllSpecialite = async (Callback) => {
   let specialiteQuery = await `SELECT * FROM Spécialité `;
@@ -112,15 +127,14 @@ exports.getAvocat = async (avocaId, Callback) => {
       return;
     } else {
       Callback(null, result);
-      
     }
   });
 };
-
-exports.update = async (id, Email, Adress, Presentation, Callback) => {
-  let updateDataQuery = await `UPDATE Avocat SET
-  Email="${Email}",
+exports.update = (id, Adress, Honorare, Telephone, Presentation, Callback) => {
+  let updateDataQuery = `UPDATE Avocat SET
   Adress="${Adress}",
+  Honorare=${Honorare},
+  Telephone=${Telephone},
   Presentation="${Presentation}"
   WHERE id =${id}`;
   db.query(updateDataQuery, (error, result) => {
@@ -133,29 +147,5 @@ exports.update = async (id, Email, Adress, Presentation, Callback) => {
     }
   });
 };
-exports.updateTel = async (id, telphon, Callback) => {
-  let updatetelQuery = await `UPDATE Avocat SET
-  Telephone="${telphon}"
-  WHERE id =${id}`;
-  db.query(updatetelQuery, (error, result) => {
-    if (error) {
-      console.log("error:", error);
-      return;
-    } else {
-      Callback(null, result);
-    }
-  });
-};
-exports.updateHonoraire = async (id, Honorare, Callback) => {
-  let updateHonoraireQuery = await `UPDATE Avocat SET
-  Honorare="${Honorare}"
-  WHERE id =${id}`;
-  db.query(updateHonoraireQuery, (error, result) => {
-    if (error) {
-      console.log("error:", error);
-      return;
-    } else {
-      Callback(null, result);
-    }
-  });
-};
+
+

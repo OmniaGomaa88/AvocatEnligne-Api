@@ -61,7 +61,6 @@ exports.getAvocatById = (request, response) => {
 };
 
 
-
 exports.newAvocat = (request, response) => {
   const {
     prenom,
@@ -200,8 +199,9 @@ exports.login = (request, response) => {
             Presentation: result[0].Presentation,
             Specialite: result[0].Spécialité,
             Honorare: result[0].Honorare,
-            image: result[0].image,
+          
           };
+
           jwt.sign(avocat, SECRET, (error, token) => {
             if (error) {
               response.status(SERVER_ERROR).json({
@@ -220,7 +220,6 @@ exports.login = (request, response) => {
               Presentation: result[0].Presentation,
               Specialite: result[0].Spécialité,
               Honorare: result[0].Honorare,
-              image: result[0].image,
             };
             response.status(OK).json({
               token: token,
@@ -236,10 +235,24 @@ exports.login = (request, response) => {
               Presentation: request.avocat.Presentation,
               Specialite: request.avocat.Spécialité,
               Honorare: request.avocat.Honorare,
-              image: request.avocat.image,
             });
           });
         }
+      });
+    }
+  });
+};
+exports.AddAvocatProfileImage= (request, response) => {
+  const selectedFile = request.body.data;
+  console.log(selectedFile)
+  Avocat.uploadAvocatImage(selectedFile, (error, result) => {
+    if (error) {
+      response.status(SERVER_ERROR).json({
+        message: "le servre founuction plus.",
+      });
+    } else {
+      response.status(OK).json({
+        result,
       });
     }
   });
@@ -263,11 +276,12 @@ exports.getAvocatData = (request, response) => {
 
 exports.updateAvocatData = (request, response) => {
   const id = request.avocat.id;
-  const Email = request.body.Email;
   const Adress = request.body.Adress;
-  const Ville = request.body.Ville;
+  const Honorare = request.body.horaire;
+  const Telephone= request.body.Telephone;
   const Presentation = request.body.Presentation;
-  Avocat.update(id, Email, Adress, Presentation, (error, result) => {
+ 
+  Avocat.update(id, Adress,Honorare,Telephone, Presentation, (error, result) => {
     if (error) {
       response.status(SERVER_ERROR).json({
         message: "le servre founuction plus.",
@@ -281,32 +295,32 @@ exports.updateAvocatData = (request, response) => {
   });
 };
 
-exports.updateAvocatTel = (request, response) => {
-  const id = request.avocat.id;
-  const Telephone = request.body.Telephone;
-  Avocat.updateTel(id, Telephone, (error, result) => {
-    if (error) {
-      console.log(error);
-      response.status(SERVER_ERROR).json({
-        message: "le servre founuction plus.",
-      });
-    }
-    response.status(OK).json({
-      result,
-    });
-  });
-};
-exports.updateAvocatHonoraire = (request, response) => {
-  const id = request.avocat.id;
-  const Honorare = request.body.Honorare;
-  Avocat.updateHonoraire(id, Honorare, (error, result) => {
-    if (error) {
-      response.status(SERVER_ERROR).json({
-        message: "le servre founuction plus.",
-      });
-    }
-    response.status(OK).json({
-      result,
-    });
-  });
-};
+// exports.updateAvocatTel = (request, response) => {
+//   const id = request.avocat.id;
+//   const Telephone = request.body.Telephone;
+//   Avocat.updateTel(id, Telephone, (error, result) => {
+//     if (error) {
+//       console.log(error);
+//       response.status(SERVER_ERROR).json({
+//         message: "le servre founuction plus.",
+//       });
+//     }
+//     response.status(OK).json({
+//       result,
+//     });
+//   });
+// };
+// exports.updateAvocatHonoraire = (request, response) => {
+//   const id = request.avocat.id;
+//   const Honorare = request.body.Honorare;
+//   Avocat.updateHonoraire(id, Honorare, (error, result) => {
+//     if (error) {
+//       response.status(SERVER_ERROR).json({
+//         message: "le servre founuction plus.",
+//       });
+//     }
+//     response.status(OK).json({
+//       result,
+//     });
+//   });
+// };

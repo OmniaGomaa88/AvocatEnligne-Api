@@ -75,7 +75,7 @@ exports.annulerParClient = (request, response) => {
 exports.annulerParAvocat = (request, response) => {
   const rendezVousId = request.body.rendezVousId;
   const avocatId = request.avocat.id;
-  RendezVous.rendezVousAnnuleClient(avocatId, rendezVousId, (error, result) => {
+  RendezVous.rendezVousAnnuleAvocat (avocatId, rendezVousId, (error, result) => {
     console.log(avocatId);
     if (error) {
       response.status(SERVER_ERROR).json({

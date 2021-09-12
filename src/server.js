@@ -9,7 +9,7 @@ const server = express();
 server.use(cors({credentials: true}))
 server.use(cookie())
 server.use(express.json());
-server.use(express.static("public"))
+server.use('/public', express.static('public'));
 server.use(express.urlencoded({extended: false}));
 
 server.use(router)
